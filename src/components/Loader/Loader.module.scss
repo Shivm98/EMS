@@ -1,0 +1,30 @@
+$n: 8; // segments count
+$speed: 800ms;
+$size: 100px;
+$color: #d64499;
+
+.container {
+  position: absolute;
+  top: 40%;
+  left: 57%;
+  transform: translate(-50%, -50%);
+}
+
+.loader {
+  animation: loader $speed step-end infinite;
+  width: $size;
+  height: $size;
+  transform: rotate(0deg);
+
+  path {
+    fill: $color;
+  }
+}
+
+@keyframes loader {
+  @for $i from 1 through $n {
+    #{$i * (100 / $n)}% {
+      transform: rotate((360deg / $n) * $i);
+    }
+  }
+}

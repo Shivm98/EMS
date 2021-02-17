@@ -1,0 +1,37 @@
+.Container {
+  max-width: 100%;
+  background-color: $color-grey-light-1;
+}
+
+.Header {
+  height: 7rem;
+  background-color: #fff;
+  border-bottom: $color-grey-light-2;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Content {
+  display: flex;
+}
+
+.Sidebar {
+  // background-color: rgb(72, 0, 94);
+  // background-color: black;
+  background-image: linear-gradient(
+    to right,
+    $color-primary-light,
+    $color-primary-dark
+  );
+
+  flex: 0 0 14%;
+}
+
+.Main {
+  flex: 1;
+  min-height: 1000px;
+  background-color: $color-grey-light-2;
+}

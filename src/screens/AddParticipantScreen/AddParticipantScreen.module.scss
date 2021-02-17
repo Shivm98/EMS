@@ -1,0 +1,66 @@
+@import "../../baseStyles/base";
+
+.FormContainer {
+  padding: 4.5rem;
+  width: 80%;
+  margin: 0 auto;
+
+  .Form {
+    background-color: #fff;
+    padding: 3rem;
+
+    .HeadingPrimary {
+      font-size: 3rem;
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    .InputContainer {
+      font-size: 1.5rem;
+      color: $color-grey-dark-2;
+      font-weight: 300;
+      margin-bottom: 2rem;
+
+      .InputLabel {
+        font-size: 1.3rem;
+      }
+
+      .Input {
+        width: 100%;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        border: none;
+        background-color: $color-grey-light-2;
+        outline: none;
+      }
+    }
+
+    .Btn {
+      width: 200px;
+      padding: 1.3rem 2.5rem;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      text-transform: uppercase;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      background-image: linear-gradient(
+        to right,
+        $color-primary,
+        $color-primary-dark
+      );
+      color: $color-grey-light-1;
+      transition: all 1s;
+      cursor: pointer;
+
+      &:hover {
+        background-image: linear-gradient(
+          to right,
+          $color-primary-dark,
+          $color-primary
+        );
+      }
+    }
+  }
+}

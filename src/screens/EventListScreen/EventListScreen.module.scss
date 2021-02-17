@@ -1,0 +1,64 @@
+@import "../../baseStyles/base";
+
+.EventContainer {
+  padding: 4.5rem;
+
+  .Content {
+    background-color: #fff;
+    padding: 3rem;
+
+    .HeadingPrimary {
+      font-size: 3rem;
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    .EventList {
+      list-style: none;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+
+      .EventItem {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:not(:last-child) {
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      .EventLink {
+        text-decoration: none;
+        color: $color-grey-dark-1;
+        margin-left: 5rem;
+        display: block;
+      }
+
+      .Btn {
+        border: none;
+        outline: none;
+        color: rgba(233, 55, 55, 0.795);
+        cursor: pointer;
+        margin-right: 5rem;
+      }
+    }
+
+    .AddBtn {
+      border: none;
+      outline: none;
+      color: rgba(20, 179, 73, 0.795);
+      cursor: pointer;
+      margin: 5rem 0 0 5rem;
+      display: block;
+      font-size: 1.3rem;
+      text-decoration: none;
+
+      span {
+        margin-left: 0.7rem;
+      }
+    }
+  }
+}

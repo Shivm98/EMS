@@ -1,0 +1,53 @@
+@import "../../baseStyles/base";
+
+.SideNav {
+  margin-top: 3rem;
+  font-size: 1.4rem;
+  list-style: none;
+
+  .SideNavItem {
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    .SideNavLink {
+      color: $color-grey-light-1;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 1.5rem 3rem;
+      display: block;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+
+      i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      span {
+        margin-left: 1rem;
+      }
+
+      &::before {
+        content: "";
+        width: 3px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $color-primary;
+        transform: scaleY(0);
+        transition: transform 0.2s, width 0.4s 0.2s;
+        z-index: -10;
+      }
+
+      &:hover::before {
+        transform: scaleY(1);
+        width: 100%;
+      }
+    }
+  }
+}

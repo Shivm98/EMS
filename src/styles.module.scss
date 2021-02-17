@@ -1,0 +1,38 @@
+@import "base/base";
+
+// Variables********************
+$color-primary: green;
+
+// Mixins***********************
+@mixin btn-bg($color) {
+  background-color: $color;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 50px;
+  border: none;
+}
+
+// Functions********************
+@function divide($a, $b) {
+  @return $a / $b;
+}
+
+.app {
+  background-color: $color-primary;
+  background-color: $color-secondary;
+  height: 100px;
+  width: divide(2000, 2) * 1px;
+
+  .heading {
+    background-color: red;
+  }
+
+  .btn {
+    @include btn-bg(pink);
+
+    &:hover {
+      // Built-in Function*********************
+      background-color: darken(pink, 10%);
+    }
+  }
+}
