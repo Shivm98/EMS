@@ -1,32 +1,47 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Styles from './EventRegisterScreen.module.scss';
 import {connect} from 'react-redux';
+import { registerEvent } from '../../actions/eventActions';
 
 const EventRegisterScreen = (props) => {
-
+    const [event, setEvent] = useState('');
+    const eventId = props.match.params.id;
+    
     useEffect(() => {
         if(!props.userInfo){
-            props.history.push('/register')
+            props.history.push('/login');
         }
-    }, [])
+        const event = props.events.find(event => eventId === event._id);
+        setEvent(event)
+    }, [eventId])
+    
+    const clickHandler = (event) => {
+        event.preventDefault();
+        const userId = props.userInfo.id;
+        props.onRegister(eventId, userId);
+    }
 
     return (
         <div className={Styles.FormContainer}>
             <form className={Styles.Form}>
-            <h1 className={Styles.HeadingPrimary}>Event Registration</h1>
+                <h1 className={Styles.HeadingPrimary}>Event Registration</h1>
                 <div className={Styles.InputContainer}>
                     <label className={Styles.InputLabel}>Username</label>
-                    <input type='text' className={Styles.Input} placeholder='' value=''/>
+                    <p>{props.userInfo.name}</p>
                 </div>
                 <div className={Styles.InputContainer}>
                     <label className={Styles.InputLabel}>Email</label>
-                    <input type='email' className={Styles.Input} placeholder='' value=''/>
+                    <p>{props.userInfo.email}</p>
                 </div>
                 <div className={Styles.InputContainer}>
-                    <label className={Styles.InputLabel}>Contact</label>
-                    <input type='number' className={Styles.Input} placeholder='' value=''/>
+                    <label className={Styles.InputLabel}>Event Name</label>
+                    <p>{event.name}</p>
                 </div>
-                <button type='submit' className={Styles.Btn}>Submit</button>
+                <div className={Styles.InputContainer}>
+                    <label className={Styles.InputLabel}>Event Description</label>
+                    <p>{event.description}</p>
+                </div>
+                {props.userInfo && <button type='submit' className={Styles.Btn} onClick={clickHandler}>Submit</button>}
             </form>
         </div>
     )
@@ -34,8 +49,15 @@ const EventRegisterScreen = (props) => {
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.userRegister.userInfo
+        userInfo: state.userLogin.userInfo,
+        events: state.eventList.events
     }
 }
 
-export default connect(mapStateToProps)(EventRegisterScreen);
+const mapDispatchToProps = dispatch => {
+    return {
+        onRegister: (eventId, userId) => dispatch(registerEvent(eventId, userId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventRegisterScreen);

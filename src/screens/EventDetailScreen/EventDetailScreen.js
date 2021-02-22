@@ -11,10 +11,12 @@ const EventDetailScreen = (props) => {
     console.log(id)
 
     useEffect(() => {
-        props.onEventDetails(id);
+        if(props.userInfo){
+            props.onEventDetails(id);
+        }else{
+            props.history.push('/login');
+        }
     },[props.match.params.id])
-
-    console.log(props.event)
 
     return (
         <>
@@ -48,7 +50,8 @@ const EventDetailScreen = (props) => {
 
 const mapStateToProps = state => {
    return {
-        event: state.eventDetails.event
+        event: state.eventDetails.event,
+        userInfo: state.userLogin.userInfo
    }
 }
 

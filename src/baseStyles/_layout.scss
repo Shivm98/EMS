@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .Content {
@@ -32,6 +33,6 @@
 
 .Main {
   flex: 1;
-  min-height: 1000px;
+  min-height: 100vh;
   background-color: $color-grey-light-2;
 }

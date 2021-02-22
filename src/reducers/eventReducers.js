@@ -11,7 +11,10 @@ import {
     EVENT_DETAILS_FAIL,
     EVENT_DELETE_REQUEST,
     EVENT_DELETE_SUCCESS,
-    EVENT_DELETE_FAIL
+    EVENT_DELETE_FAIL,
+    EVENT_REGISTER_REQUEST,
+    EVENT_REGISTER_SUCCESS,
+    EVENT_REGISTER_FAIL
 } from '../constants/eventConstants';
 
 const initialState = {
@@ -111,6 +114,26 @@ export const eventDeleteReducer = (state = {}, action) => {
                 loading: false,
                 error: action.error,
                 success: false
+            }
+        default: return state;
+    }
+}
+
+export const eventRegisterReducer = (state = {}, action) => {
+    switch(action.type){
+        case EVENT_REGISTER_REQUEST:
+            return {
+                loading: true
+            }
+        case EVENT_REGISTER_SUCCESS:
+            return {
+                loading: false,
+                success: true
+            }
+        case EVENT_REGISTER_FAIL:
+            return {
+                loading: false,
+                error: action.error
             }
         default: return state;
     }

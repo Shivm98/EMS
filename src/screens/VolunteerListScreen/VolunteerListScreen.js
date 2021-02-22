@@ -2,15 +2,23 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { listVolunteers } from '../../actions/volunteerActions';
+import { deleteVolunteer, listVolunteers } from '../../actions/volunteerActions';
 import Styles from './VolunteerListScreen.module.scss';
 import Loader from '../../components/Loader/Loader';
 
 const VolunteerListScreen = (props) => {
 
     useEffect(() => {
-        props.onListVolunteers();
-    },[props.onListVolunteers]);
+        if(props.userInfo){
+            props.onListVolunteers();
+        }else{
+            props.history.push('/login');
+        }
+    },[props.onListVolunteers, props.successDelete]);
+
+    const deleteHanlder = (id) => {
+        props.onDeleteVolunteer(id)
+    }
 
     return (
         <div className={Styles.VolunteerContainer}>
@@ -18,36 +26,24 @@ const VolunteerListScreen = (props) => {
                 <div className={Styles.Content}>
                     <h1 className={Styles.HeadingPrimary}>All Volunteers</h1>
                     <ul className={Styles.VolunteerList}>
-                        <li className={Styles.VolunteerItem}>
-                            <Link to='' className={Styles.VolunteerLink}>John Ducket</Link>
-                            <button className={Styles.Btn}>
-                                <i className='fas fa-trash'></i>
-                            </button>
-                        </li>
-                        <li className={Styles.VolunteerItem}>
-                            <Link to='' className={Styles.VolunteerLink}>Shiv Mishra</Link>
-                            <button className={Styles.Btn}>
-                                <i className='fas fa-trash'></i>
-                            </button>
-                        </li>
-                        <li className={Styles.VolunteerItem}>
-                            <Link to='' className={Styles.VolunteerLink}>Super Saf</Link>
-                            <button className={Styles.Btn}>
-                                <i className='fas fa-trash'></i>
-                            </button>
-                        </li>
                         {props.volunteers.map(volunteer => (
                             <li className={Styles.VolunteerItem} key={volunteer._id}>
-                            <Link to='/volunteer/1' className={Styles.VolunteerLink}>{volunteer.name}</Link>
-                            <button className={Styles.Btn}>
+                            <Link to={`/user/${volunteer._id}`} className={Styles.VolunteerLink}>{volunteer.name}</Link>
+                            <button className={Styles.Btn} onClick={() => deleteHanlder(volunteer._id)}>
                                 <i className='fas fa-trash'></i>
                             </button>
                         </li>
                         ))}
                     </ul>
-                    <Link to='/addvolunteer' className={Styles.AddBtn}>
+
+                     {
+                        props.userInfo && props.userInfo.type === 'admin' 
+                        ? (<Link to='/addvolunteer' className={Styles.AddBtn}>
                         <i className="fa fa-plus"></i>
-                        <span>Add Volunteer</span></Link>
+                        <span>Add Volunteer</span></Link>)
+                        : null
+                    }
+                    
                 </div>
             )}
         </div>
@@ -56,14 +52,18 @@ const VolunteerListScreen = (props) => {
 const mapStateToProps = state => {
     return {
         volunteers: state.volunteerList.volunteers,
-        loading: state.volunteerList.loading
+        loading: state.volunteerList.loading,
+        userInfo: state.userLogin.userInfo,
+        successDelete: state.volunteerDelete.success,
+        loadingDelete: state.volunteerDelete.loading,
     }
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        onListVolunteers: () => dispatch(listVolunteers())
+        onListVolunteers: () => dispatch(listVolunteers()),
+        onDeleteVolunteer: (id) => dispatch(deleteVolunteer(id))
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(VolunteerListScreen);

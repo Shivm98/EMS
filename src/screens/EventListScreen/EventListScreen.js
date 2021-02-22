@@ -9,8 +9,12 @@ import Loader from '../../components/Loader/Loader';
 const EventListScreen = (props) => {
 
     useEffect(() => {
-        props.onListEvents();
-    }, []);
+        if(props.userInfo){
+            props.onListEvents();
+        }else{
+            props.history.push('/login');
+        }
+    }, [props.userInfo]);
 
     const deleteHandler = (event, id) => {
         event.preventDefault();
@@ -33,9 +37,13 @@ const EventListScreen = (props) => {
                                 </li>
                         ))}
                     </ul>
-                    <Link to='/addevent' className={Styles.AddBtn}>
-                        <i className="fa fa-plus"></i>
-                        <span>Add Event</span></Link>
+                    {
+                        props.userInfo && props.userInfo.type === 'admin' 
+                        ? (<Link to='/addevent' className={Styles.AddBtn}>
+                            <i className="fa fa-plus"></i>
+                            <span>Add Event</span></Link>)
+                        : null
+                    }
                 </div>}
         </div>
     )
@@ -45,7 +53,8 @@ const mapStateToProps = state => {
     return {
         listEvents: state.eventList.events,
         loading: state.eventList.loading,
-        deleteLoading: state.eventDelete.loading
+        deleteLoading: state.eventDelete.loading,
+        userInfo: state.userLogin.userInfo
     }
 }
 

@@ -12,16 +12,22 @@ import {
     EVENT_DETAILS_FAIL,
     EVENT_DELETE_REQUEST,
     EVENT_DELETE_SUCCESS,
-    EVENT_DELETE_FAIL
+    EVENT_DELETE_FAIL,
+    EVENT_REGISTER_REQUEST,
+    EVENT_REGISTER_SUCCESS,
+    EVENT_REGISTER_FAIL
 } from '../constants/eventConstants';
+import sendHttpRequest from '../utils/SendHttpRequest';
 
 export const listEvents = () => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
             dispatch({ type: EVENT_LIST_REQUEST });
 
-            // let {data} = await axios.get('/admin/events');
-            let data = await SendHttpRequest('GET', '/admin/events');
+            const { userLogin } = getState();
+            const { token } = userLogin;
+
+            let data = await SendHttpRequest('GET', '/user/events', null, token );
             console.log(data);
 
             // fetching data into array.
@@ -73,16 +79,15 @@ export const eventDetails = (id) => {
 }
 
 export const createEvent = (event) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try {
             dispatch({ type: EVENT_CREATE_REQUEST });
             let url = '';
-            // url = 'https://eventmanagement-40f98-default-rtdb.firebaseio.com/events.json';
-            url = "/admin/add-event/";
+            
+            url = "/user/add-event/";
 
-            // const config = {     
-            //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
-            // }
+            const { userLogin } = getState();
+            const { token } = userLogin;
 
             let eventData = new FormData();
            
@@ -93,7 +98,7 @@ export const createEvent = (event) => {
             eventData.append('organizer', event['organizer'])
 
             // const { data } = await axios.post(url, eventData, config);
-            const data = await SendHttpRequest('POST', url, eventData);
+            const data = await SendHttpRequest('POST', url, eventData, token);
 
             const fetchedEvents = [];
             for (let key in data){
@@ -114,17 +119,40 @@ export const createEvent = (event) => {
 }
 
 export const deleteEvent = (id) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         try{
             dispatch({type: EVENT_DELETE_REQUEST});
 
-            // await axios.delete(`admin/delete-event/${id}`);
-            await SendHttpRequest('DELETE', `admin/delete-event/${id}`);
+            const {userLogin} = getState();
+            const {token} = userLogin;
+
+            await SendHttpRequest('DELETE', `user/delete-event/${id}`, null, token);
             dispatch(listEvents())
 
             dispatch({type: EVENT_DELETE_SUCCESS});
         }catch(error){
             dispatch({type: EVENT_DELETE_FAIL, error: error})
+        }
+    }
+}
+
+export const registerEvent= (eventId, userId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({type: EVENT_REGISTER_REQUEST});
+
+            const {userLogin} = getState();
+            const {token} = userLogin;
+
+            const userData = new FormData();
+            userData.append('userId', userId);
+
+            let data = await SendHttpRequest('POST', `/user/register/${eventId}`, userData, token);
+
+            dispatch({type: EVENT_REGISTER_SUCCESS, payload: data});
+        } catch (error) {
+
+            dispatch({type: EVENT_REGISTER_FAIL, error: error});
         }
     }
 }

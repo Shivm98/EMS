@@ -1,19 +1,17 @@
-const sendHttpRequest = (method, url, data) => {
+const sendHttpRequest = (method, url, data, token) => {
     const promise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
 
         // preparing the request
         xhr.open(method, url);
-
+        console.log(url)
         // getting by default JSON 
         xhr.responseType = 'json';
 
         // Adding Header Config
-        // if(data){
-            // 'content-type': 'application/x-www-form-urlencoded'
-            // 'Content-Type', 'application/json'
-        //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        // }
+        if(token){
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+        }
 
         xhr.onload = () => {
             if(xhr.status > 400){
@@ -32,25 +30,10 @@ const sendHttpRequest = (method, url, data) => {
 
         // send data and actual request
         xhr.send(data);
-
     })
     return promise;
 }
 
-
-// const sendData = () => {
-//     const data = {
-//         email: 'shiv@shiv.com',
-//     }
-
-//     sendHttpRequest('POST', '/admin/events', data)
-//         .then(responseData => {
-//             console.log(responseData)
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-// };
 
 
 export default sendHttpRequest;

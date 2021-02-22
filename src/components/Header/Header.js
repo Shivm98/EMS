@@ -1,10 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import { AiOutlineLogout, AiOutlineUser, AiOutlineUserAdd } from 'react-icons/ai';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {logout} from '../../actions/userActions';
 
 import Styles from "./Header.module.scss";
+import userIcon from '../../images/userIcon.png';
 
 const Header = (props) => {
+
+    const logoutHandler = () => {
+        props.onLogout()
+    }
+
     return (
         <>
             <div className={Styles.Logo}>
@@ -12,12 +20,36 @@ const Header = (props) => {
             </div>
 
             <div className={Styles.UserNav}>
-                {props.userInfo 
-                ? <Link to='/logout' className={Styles.LinkItem}>Logout</Link>
+                {props.userLogin.userInfo
+                ? 
+               ( <>
+                <Link to={`/user/`} className={Styles.LinkItem}>
+                    <p>{props.userLogin.userInfo.name}</p>
+                    <span>
+                        <AiOutlineUser/>
+                    </span>
+                </Link>
+                <Link to='/logout' className={Styles.LinkItem} onClick={logoutHandler}>
+                    <p>Logout</p>
+                    <span>
+                        <AiOutlineLogout/>
+                    </span>
+                </Link>
+                </>)
                 : (
                     <>
-                        <Link to='/register' className={Styles.LinkItem}>Register</Link>
-                        <Link to='/login' className={Styles.LinkItem}>Login</Link>
+                        <Link to='/register' className={Styles.LinkItem}>
+                            <p>Register</p>
+                            <span>
+                                <AiOutlineUserAdd/>
+                            </span>
+                        </Link>
+                        <Link to='/login' className={Styles.LinkItem}>
+                        <p>Login</p>
+                        <span>
+                            <AiOutlineLogout/>
+                        </span>
+                    </Link>
                     </>
                   )
                 }
@@ -29,9 +61,14 @@ const Header = (props) => {
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.userRegister.userInfo
+        userLogin: state.userLogin
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(logout())
+    }
+}
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

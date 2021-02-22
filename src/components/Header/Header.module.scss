@@ -17,11 +17,30 @@
 
 .UserNav {
   margin-right: 4rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
 
   .LinkItem {
     text-decoration: none;
     color: inherit;
+    letter-spacing: 1px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 0.5rem;
+      color: $color-primary-light;
+      transition: all 0.3s;
+    }
 
     &:not(:first-child) {
       margin-left: 4rem;

@@ -14,7 +14,7 @@ const AddEventScreen = (props) => {
 
     useEffect(() => {
         if(!props.userInfo){
-            props.history.push('/register')
+            props.history.push('/login')
         }
     }, [])
 
@@ -86,7 +86,7 @@ const AddEventScreen = (props) => {
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.userRegister.userInfo
+        userInfo: state.userLogin.userInfo
     }
 }
 

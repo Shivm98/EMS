@@ -9,7 +9,11 @@ import Loader from '../../components/Loader/Loader';
 const ParticipantListScreen = (props) => {
 
     useEffect(() => {
-        props.onListParticipants();
+        if(props.userInfo){
+            props.onListParticipants();
+        }else{
+            props.history.push('/login');
+        }
     },[props.onListParticipants]);
 
     return (
@@ -35,7 +39,8 @@ const ParticipantListScreen = (props) => {
 const mapStateToProps = state => {
     return {
         participants: state.participantList.participants,
-        loading: state.participantList.loading
+        loading: state.participantList.loading,
+        userInfo: state.userLogin.userInfo
     }
 }
 

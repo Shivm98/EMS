@@ -14,6 +14,7 @@ import AddVolunteerScreen from './screens/AddVolunteerScreen/AddVolunteerScreen'
 import ParticipantListScreen from './screens/ParticipantListScreen/ParticipantListScreen';
 import UserRegisterScreen from './screens/UserRegisterScreen/UserRegisterScreen';
 import UserLoginScreen from './screens/UserLoginScreen/UserLoginScreen';
+import UserDetailScreen from './screens/UserDetailScreen/UserDetailScreen';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
             <Route path='/login' component={UserLoginScreen}/>
             <Route path='/addevent' component={AddEventScreen}/>
             <Route path='/addvolunteer' component={AddVolunteerScreen}/>
+            <Route path='/user/:id' component={UserDetailScreen}/>
             <Route path='/' component={EventListScreen}/>
             </Switch>
           </main>

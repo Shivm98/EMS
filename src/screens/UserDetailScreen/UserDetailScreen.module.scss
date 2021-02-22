@@ -1,0 +1,45 @@
+.Container {
+  padding: 4rem;
+
+  .Content {
+    background-color: #fff;
+    padding: 4rem;
+
+    .Top {
+      display: flex;
+      align-items: center;
+
+      .ImgContainer {
+        height: 18rem;
+        text-align: center;
+        margin-right: 4rem;
+      }
+
+      img {
+        height: 100%;
+        display: inline-block;
+      }
+
+      .Meta {
+        .Name {
+          font-size: 3rem;
+          font-weight: 600;
+          letter-spacing: 1px;
+          color: rgb(43, 42, 42);
+        }
+
+        .Email {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+
+        .Type {
+          color: rgb(255, 0, 128);
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+        }
+      }
+    }
+  }
+}

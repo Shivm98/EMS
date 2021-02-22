@@ -4,9 +4,11 @@ import {
     eventCreateReducer, 
     eventDetailReducer, 
     eventListReducer,
-    eventDeleteReducer
+    eventDeleteReducer,
+    eventRegisterReducer
 } from './reducers/eventReducers';
 import { 
+    volunteerDeleteReducer,
     volunteerListReducer 
 } from './reducers/volunteerReducers';
 
@@ -16,7 +18,8 @@ import {
 
 import {
     userLoginReducer,
-    userRegisterReducer
+    userRegisterReducer,
+    userDetailReducer
 } from'./reducers/userReducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,10 +29,13 @@ const rootReducer = combineReducers({
     eventList: eventListReducer,
     eventDetails: eventDetailReducer,
     eventDelete: eventDeleteReducer,
+    eventRegister: eventRegisterReducer,
     volunteerList: volunteerListReducer,
+    volunteerDelete: volunteerDeleteReducer,
     participantList: participantListReducer,
     userRegister: userRegisterReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    userDetail: userDetailReducer
 });
 
 const middleware = [thunk];

@@ -4,7 +4,10 @@ import {
     VOLUNTEER_LIST_FAIL,
     VOLUNTEER_CREATE_REQUEST,
     VOLUNTEER_CREATE_SUCCESS,
-    VOLUNTEER_CREATE_FAIL
+    VOLUNTEER_CREATE_FAIL,
+    VOLUNTEER_DELETE_REQUEST,
+    VOLUNTEER_DELETE_SUCCESS,
+    VOLUNTEER_DELETE_FAIL
 } from '../constants/volunteerConstants';
 
 const initialState = {
@@ -57,5 +60,27 @@ export const volunteerListReducer = (state = initialState, action) => {
             }
         default:
             return state;
+    }
+}
+
+
+export const volunteerDeleteReducer = (state = {}, action) => {
+    switch(action.type){
+        case VOLUNTEER_DELETE_REQUEST: 
+            return {
+                loading: true
+            };
+        case VOLUNTEER_DELETE_SUCCESS:
+            return {
+                loading: false,
+                success: true
+            }
+        case VOLUNTEER_DELETE_FAIL:
+            return{
+                loading: false,
+                error: action.payload
+            }
+        default: 
+            return state
     }
 }
